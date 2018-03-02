@@ -12,25 +12,45 @@
     <properties>
         <javaFx.version>8.6.0</javaFx.version>
         <maven.resource.version>3.0.2</maven.resource.version>
+        <main.class.path>by.bsuir.parser.start.Main</main.class.path>
+        <encoding>UTF-8</encoding>
     </properties>
 
     <build>
         <plugins>
-
-            <plugin>
-                <groupId>com.zenjava</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>${javaFx.version}</version>
-                <configuration>
-                    <mainClass>by.bsuir.parser.start.Main</mainClass>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>${maven.resource.version}</version>
                 <configuration>
-                    <encoding>UTF-8</encoding>
+                    <encoding>${encoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.zenjava</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>${javaFx.version}</version>
+                <configuration>
+                    <mainClass>${main.class.path}</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>${main.class.path}</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,33 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="300.0" minWidth="600.0" mouseTransparent="true" prefHeight="393.0" prefWidth="625.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="by.bsuir.parser.controller.MainController">
-   <children>
-      <MenuBar pickOnBounds="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<BorderPane prefHeight="400.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="by.bsuir.parser.controller.MainController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu fx:id="menuFileId" mnemonicParsing="false" text="%menu.file">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem fx:id="menuOpenCSVId" mnemonicParsing="false" text="%menuItem.openCSV" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <Menu fx:id="menuSettingsId" mnemonicParsing="false" text="%menu.menuItem.settings">
+                    <items>
+                        <Menu fx:id="menuChangeLangId" mnemonicParsing="false" text="%menu.menuItem.changeLang">
+                          <items>
+                            <MenuItem fx:id="menuChangeLangEn" mnemonicParsing="false" onAction="#changeLangEn" text="%menuItem.settings.changeLang.en" />
+                              <MenuItem fx:id="menuChangeLangRu" mnemonicParsing="false" onAction="#changeLangRu" text="%menuItem.settings.changeLang.ru" />
+                          </items>
+                        </Menu>
+                    </items>
+                  </Menu>
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu fx:id="menuHelpId" mnemonicParsing="false" text="%menu.help">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem fx:id="menuAboutId" mnemonicParsing="false" text="%menuItem.about" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane layoutY="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+   </top>
+   <center>
+      <AnchorPane BorderPane.alignment="CENTER">
          <children>
             <SplitPane dividerPositions="0.2568218298555377" prefHeight="575.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <items>
@@ -35,7 +44,7 @@
                      <children>
                         <TableView layoutX="7.0" layoutY="131.0" prefHeight="573.0" prefWidth="163.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <columns>
-                              <TableColumn prefWidth="75.0" text="Column name" />
+                              <TableColumn fx:id="tableViewColumnName1Id" prefWidth="75.0" text="%tableView.columnName1" />
                            </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -45,21 +54,21 @@
                   </AnchorPane>
                   <AnchorPane layoutY="27.0">
                      <children>
-                        <Label text="Customization" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                        <Label fx:id="labelCustomizationId" text="%label.customization" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
                         <TextArea prefHeight="298.0" prefWidth="451.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="25.0" />
                         <HBox alignment="TOP_RIGHT" layoutY="298.0" prefHeight="20.0" prefWidth="451.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                            <children>
-                              <Button mnemonicParsing="false" prefWidth="70.0" text="Inject">
+                              <Button fx:id="buttonInjectId" mnemonicParsing="false" text="%button.inject">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" prefWidth="70.0" text="View">
+                              <Button fx:id="buttonViewId" mnemonicParsing="false" text="%button.view">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" prefWidth="70.0" text="Generate">
+                              <Button fx:id="buttonGenerateId" mnemonicParsing="false" text="%button.generate">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>
@@ -72,5 +81,5 @@
             </SplitPane>
          </children>
       </AnchorPane>
-   </children>
-</AnchorPane>
+   </center>
+</BorderPane>

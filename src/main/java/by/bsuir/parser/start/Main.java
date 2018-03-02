@@ -15,21 +15,26 @@ import java.util.ResourceBundle;
  */
 public class Main extends Application {
 
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/fxml/main.fxml"));
-        fxmlLoader.setResources(ResourceBundle.getBundle("bundles.Locale", new Locale("ru")));
+
+        fxmlLoader.setResources(ResourceBundle.getBundle("bundles.Locale", new Locale("en") ));
+
+        primaryStage.setMinWidth(700);
+        primaryStage.setMinHeight(500);
+        primaryStage.setResizable(true);
+
         Parent fxmlMain = fxmlLoader.load();
+
+        primaryStage.setTitle(fxmlLoader.getResources().getString("application.title"));
+        primaryStage.setScene(new Scene(fxmlMain));
 
         MainController controller = fxmlLoader.getController();
         controller.setMainStage(primaryStage);
 
-        primaryStage.setMinWidth(700);
-        primaryStage.setMinHeight(500);
-
-        primaryStage.setTitle(fxmlLoader.getResources().getString("application.title"));
-        primaryStage.setScene(new Scene(fxmlMain));
         primaryStage.show();
     }
 
