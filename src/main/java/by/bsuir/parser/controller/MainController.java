@@ -2,6 +2,9 @@ package by.bsuir.parser.controller;
 
 import by.bsuir.parser.ConfigReader;
 import by.bsuir.parser.dialog.Dialogs;
+import by.bsuir.parser.model.Table;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -20,10 +23,18 @@ public class MainController implements Initializable {
 
     private Stage mainStage; // для загрузки
     private ResourceBundle resourceBundle;
+    private ObservableList<String> headerList = FXCollections.observableArrayList();
 
     public void initialize(URL location, ResourceBundle resources) {
         this.resourceBundle = resources;
         initLocale();
+        initData();
+    }
+
+    private void initData() {
+        ObservableList<String> items = FXCollections.observableArrayList (
+                "Single", "Double", "Suite", "Family App");
+        listViewId.setItems(items); //!!!!!!
     }
 
     private void initLocale() {
@@ -37,7 +48,7 @@ public class MainController implements Initializable {
         menuChangeLangRu.setText(resourceBundle.getString(MENU_ITEM_LANG_RU));
         menuAboutId.setText(resourceBundle.getString(MENU_ITEM_ABOUT));
 
-        tableViewColumnName1Id.setText(resourceBundle.getString(TABLE_VIEW_COLUMN_NAME1));
+        labelColumnNameId.setText(resourceBundle.getString(LABEL_COLUMN_NAME1));
 
         labelCustomizationId.setText(resourceBundle.getString(LABEL_CUSTOMIZATION));
 
@@ -94,9 +105,10 @@ public class MainController implements Initializable {
     public MenuItem menuChangeLangRu;
     public MenuItem menuAboutId;
 
-    public TableColumn tableViewColumnName1Id;
+    public ListView<String> listViewId;
 
     public Label labelCustomizationId;
+    public Label labelColumnNameId;
 
     public Button buttonInjectId;
     public Button buttonViewId;
@@ -115,7 +127,7 @@ public class MainController implements Initializable {
     private final String MENU_ITEM_SETTINGS = "menu.menuItem.settings";
     private final String MENU_ITEM_LANG_EN = "menuItem.settings.changeLang.en";
     private final String MENU_ITEM_LANG_RU = "menuItem.settings.changeLang.ru";
-    private final String TABLE_VIEW_COLUMN_NAME1 = "tableView.columnName1";
+    private final String LABEL_COLUMN_NAME1 = "label.column.name";
     private final String FILE_CHOOSER_CHOOSE = "fileChooser.chooseFile";
     private final String ERROR = "error";
     private final String ERROR_TEXT_1 = "error.text.1";
