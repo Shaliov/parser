@@ -13,7 +13,7 @@
         <menus>
           <Menu fx:id="menuFileId" mnemonicParsing="false" text="%menu.file">
             <items>
-              <MenuItem fx:id="menuOpenCSVId" mnemonicParsing="false" text="%menuItem.openCSV" />
+              <MenuItem fx:id="menuOpenCSVId" mnemonicParsing="false" onAction="#openCsvListener" text="%menuItem.openCSV" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <Menu fx:id="menuSettingsId" mnemonicParsing="false" text="%menu.menuItem.settings">
                     <items>

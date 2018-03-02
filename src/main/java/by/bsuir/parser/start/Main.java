@@ -7,7 +7,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 /**

@@ -14,7 +14,17 @@
         <maven.resource.version>3.0.2</maven.resource.version>
         <main.class.path>by.bsuir.parser.start.Main</main.class.path>
         <encoding>UTF-8</encoding>
+        <json.version>1.1.1</json.version>
     </properties>
+
+        <dependencies>
+            <dependency>
+                <groupId>com.googlecode.json-simple</groupId>
+                <artifactId>json-simple</artifactId>
+                <version>${json.version}</version>
+            </dependency>
+        </dependencies>
+
 
     <build>
         <plugins>
