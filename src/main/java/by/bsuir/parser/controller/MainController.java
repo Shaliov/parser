@@ -40,6 +40,7 @@ public class MainController implements Initializable {
         if (listViewId.getItems().size() == 0) {
             textAreaTemplateId.setVisible(false);
             textFieldSearchId.setVisible(false);
+            buttonCleanId.setVisible(false);
         }
         initLocale();
     }
@@ -65,6 +66,7 @@ public class MainController implements Initializable {
         buttonInjectId.setText(resourceBundle.getString(BUTTON_INJECT));
         buttonViewId.setText(resourceBundle.getString(BUTTON_VIEW));
         buttonGenerateId.setText(resourceBundle.getString(BUTTON_GENERATE));
+        buttonCleanId.setText(resourceBundle.getString(BUTTON_CLEAN));
         if (mainStage != null) {
             mainStage.setTitle(resourceBundle.getString(APPLICATION_TITLE));
         }
@@ -75,8 +77,6 @@ public class MainController implements Initializable {
         if (selectedItemListView != null) {
             templateMap.put(selectedItemListView, textAreaTemplateId.getText());
         }
-        textFieldSearchId.clear();
-        listViewId.setItems(FXCollections.observableArrayList(table.getHeaderList()));
     }
 
     public void listViewMouseReleased(MouseEvent mouseEvent) {
@@ -88,14 +88,25 @@ public class MainController implements Initializable {
         if (listViewId.getItems().size() != 0) {
             textAreaTemplateId.setVisible(true);
         }
-        tempHeaderList = listViewId.getItems();
-        searchTemplate = "";
     }
 
     public void onKeyReleasedSearchField(KeyEvent keyEvent) {
-        searchTemplate = searchTemplate + keyEvent.getText().toLowerCase();
-        tempHeaderList = tempHeaderList.stream().filter( it -> it.toLowerCase().contains(searchTemplate)).collect(Collectors.toList());
+        if (!keyEvent.getText().equals("")) {
+            searchTemplate = searchTemplate + keyEvent.getText().toLowerCase();
+        } else {
+            searchTemplate = searchTemplate.substring(0,searchTemplate.length() - 1);
+            tempHeaderList = table.getHeaderList();
+        }
+        tempHeaderList = tempHeaderList.stream().filter(it -> it.toLowerCase().contains(searchTemplate)).collect(Collectors.toList());
         listViewId.setItems(FXCollections.observableArrayList(tempHeaderList));
+    }
+
+    public void onMouseClickedButtonClean(MouseEvent mouseEvent) {
+        searchTemplate = "";
+        textFieldSearchId.clear();
+        List<String> headerList = table.getHeaderList();
+        tempHeaderList = headerList;
+        listViewId.setItems(FXCollections.observableArrayList(headerList));
     }
 
     public void openFileListener(ActionEvent actionEvent) {
@@ -118,6 +129,7 @@ public class MainController implements Initializable {
                 templateMap.put(item, "");
             }
             textFieldSearchId.setVisible(true);
+            buttonCleanId.setVisible(true);
         }
 
 
@@ -169,6 +181,8 @@ public class MainController implements Initializable {
     @FXML private Button buttonInjectId;
     @FXML private Button buttonViewId;
     @FXML private Button buttonGenerateId;
+    @FXML private Button buttonCleanId;
+
 
     @FXML private TextArea textAreaTemplateId;
     @FXML private TextField textFieldSearchId;
@@ -177,6 +191,7 @@ public class MainController implements Initializable {
     private final String BUTTON_GENERATE = "button.generate";
     private final String BUTTON_INJECT = "button.inject";
     private final String BUTTON_VIEW = "button.view";
+    private final String BUTTON_CLEAN = "button.clean";
     private final String LABEL_CUSTOMIZATION = "label.customization";
     private final String MENU_FILE = "menu.file";
     private final String MENU_HELP = "menu.help";
@@ -192,6 +207,7 @@ public class MainController implements Initializable {
     private final String ERROR = "error";
     private final String ERROR_TEXT_1 = "error.text.1";
     private final String ERROR_TEXT_2 = "error.text.2";
+
 
 
 }
