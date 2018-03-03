@@ -13,7 +13,7 @@
         <menus>
           <Menu fx:id="menuFileId" mnemonicParsing="false" text="%menu.file">
             <items>
-              <MenuItem fx:id="menuOpenCSVId" mnemonicParsing="false" onAction="#openCsvListener" text="%menuItem.openCSV" />
+              <MenuItem fx:id="menuOpenCSVId" mnemonicParsing="false" onAction="#openFileListener" text="%menuItem.openFile" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <Menu fx:id="menuSettingsId" mnemonicParsing="false" text="%menu.menuItem.settings">
                     <items>
@@ -40,16 +40,17 @@
          <children>
             <SplitPane dividerPositions="0.2568218298555377" prefHeight="575.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <items>
-                <AnchorPane maxWidth="160.0" minWidth="160.0" prefHeight="160.0" prefWidth="100.0">
+                <AnchorPane maxWidth="200.0" minWidth="200.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="listViewId" prefHeight="373.0" prefWidth="160.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="25.0" />
+                        <ListView fx:id="listViewId" onMousePressed="#listViewMousePressed" onMouseReleased="#listViewMouseReleased" prefHeight="373.0" prefWidth="160.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="25.0" />
                         <Label fx:id="labelColumnNameId" layoutX="36.0" layoutY="6.0" text="%label.column.name" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
+                        <TextField fx:id="textFieldSearchId" layoutX="14.0" layoutY="333.0" onKeyReleased="#onKeyReleasedSearchField" promptText="%text.field.search" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane layoutY="27.0">
                      <children>
                         <Label fx:id="labelCustomizationId" text="%label.customization" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0" />
-                        <TextArea prefHeight="298.0" prefWidth="451.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="25.0" />
+                        <TextArea fx:id="textAreaTemplateId" prefHeight="298.0" prefWidth="451.0" wrapText="true" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="25.0" />
                         <HBox alignment="TOP_RIGHT" layoutY="298.0" prefHeight="20.0" prefWidth="451.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                            <children>
                               <Button fx:id="buttonInjectId" mnemonicParsing="false" text="%button.inject">

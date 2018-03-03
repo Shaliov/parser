@@ -15,6 +15,7 @@
         <main.class.path>by.bsuir.parser.start.Main</main.class.path>
         <encoding>UTF-8</encoding>
         <json.version>1.1.1</json.version>
+        <opencsv.version>4.0</opencsv.version>
     </properties>
 
         <dependencies>
@@ -22,6 +23,11 @@
                 <groupId>com.googlecode.json-simple</groupId>
                 <artifactId>json-simple</artifactId>
                 <version>${json.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.opencsv</groupId>
+                <artifactId>opencsv</artifactId>
+                <version>${opencsv.version}</version>
             </dependency>
         </dependencies>
 

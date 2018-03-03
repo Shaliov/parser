@@ -9,19 +9,18 @@ import java.util.Map;
  * @author Shaliou_AG
  */
 public class Table {
-    private String id;
 
     private List<String> headerList;
-    private Map<String, String> contentMap;
+    private List<String[]> contentList;
 
     public Table() {
         headerList = new ArrayList<>();
-        contentMap = new HashMap<>();
+        contentList = new ArrayList<>();
     }
 
-    public Table(List<String> headerList, Map<String, String> contentMap) {
+    public Table(List<String> headerList, List<String[]> contentList) {
         this.headerList = headerList;
-        this.contentMap = contentMap;
+        this.contentList = contentList;
     }
 
     public List<String> getHeaderList() {
@@ -32,11 +31,11 @@ public class Table {
         this.headerList = headerList;
     }
 
-    public Map<String, String> getContentMap() {
-        return contentMap;
+    public List<String[]> getContentList() {
+        return contentList;
     }
 
-    public void setContentMap(Map<String, String> contentMap) {
-        this.contentMap = contentMap;
+    public void setContentList(List<String[]> contentList) {
+        this.contentList = contentList;
     }
 }
