@@ -18,7 +18,7 @@ public class Table {
         contentList = new ArrayList<>();
     }
 
-    public Table(List<String> headerList, List<String[]> contentList) {
+    public Table(List<String> headerList,  List<String[]> contentList) {
         this.headerList = headerList;
         this.contentList = contentList;
     }
@@ -31,7 +31,7 @@ public class Table {
         this.headerList = headerList;
     }
 
-    public List<String[]> getContentList() {
+    public  List<String[]> getContentList() {
         return contentList;
     }
 

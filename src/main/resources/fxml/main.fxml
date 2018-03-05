@@ -74,18 +74,19 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="buttonViewId" mnemonicParsing="false" text="%button.view">
+                              <Button fx:id="buttonViewId" mnemonicParsing="false" onMouseClicked="#viewOnClickedListener" text="%button.view">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="buttonGenerateId" mnemonicParsing="false" text="%button.generate">
+                              <Button fx:id="buttonGenerateId" mnemonicParsing="false" onMouseClicked="#onMouseClickedGenerateListener" text="%button.generate">
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </HBox.margin>
                               </Button>
                            </children>
                         </HBox>
+                        <TextArea fx:id="textAreaTemplateId1" layoutX="15.0" layoutY="35.0" prefHeight="298.0" prefWidth="451.0" wrapText="true" />
                      </children>
                   </AnchorPane>
               </items>

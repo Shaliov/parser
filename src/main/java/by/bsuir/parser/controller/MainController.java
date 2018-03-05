@@ -3,6 +3,7 @@ package by.bsuir.parser.controller;
 import by.bsuir.parser.ConfigReader;
 import by.bsuir.parser.dialog.Dialogs;
 import by.bsuir.parser.model.Table;
+import by.bsuir.parser.service.Generator;
 import by.bsuir.parser.service.ParserFabric;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,7 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
@@ -27,12 +27,12 @@ import java.util.stream.Collectors;
  */
 public class MainController implements Initializable {
 
-    private Stage mainStage; // для загрузки
+    private Stage mainStage;
     private ResourceBundle resourceBundle;
     private Table table;
-    private Map<String, String> templateMap = new HashMap<>();
+    private Map<String, StringBuilder> templateMap = new HashMap<>();
     private List<String> tempHeaderList = new ArrayList<>();
-    private String searchTemplate = "";
+    private StringBuilder searchTemplate = new StringBuilder("");
     private String selectedItemListView;
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -75,15 +75,15 @@ public class MainController implements Initializable {
 
     public void listViewMousePressed(MouseEvent mouseEvent) {
         if (selectedItemListView != null) {
-            templateMap.put(selectedItemListView, textAreaTemplateId.getText());
+            templateMap.put(selectedItemListView, new StringBuilder(textAreaTemplateId.getText()));
         }
     }
 
     public void listViewMouseReleased(MouseEvent mouseEvent) {
         selectedItemListView = listViewId.getSelectionModel().getSelectedItem();
-        String template = templateMap.get(selectedItemListView);
+        StringBuilder template = templateMap.get(selectedItemListView);
         if (template != null) {
-            textAreaTemplateId.setText(template);
+            textAreaTemplateId.setText(template.toString());
         }
         if (listViewId.getItems().size() != 0) {
             textAreaTemplateId.setVisible(true);
@@ -92,24 +92,40 @@ public class MainController implements Initializable {
 
     public void onKeyReleasedSearchField(KeyEvent keyEvent) {
         if (!keyEvent.getText().equals("")) {
-            searchTemplate = searchTemplate + keyEvent.getText().toLowerCase();
+            searchTemplate = searchTemplate.append(keyEvent.getText().toLowerCase());
         } else {
-            searchTemplate = searchTemplate.substring(0,searchTemplate.length() - 1);
+            searchTemplate = searchTemplate.delete(0,searchTemplate.length() - 1);
             tempHeaderList = table.getHeaderList();
         }
-        tempHeaderList = tempHeaderList.stream().filter(it -> it.toLowerCase().contains(searchTemplate)).collect(Collectors.toList());
+        tempHeaderList = tempHeaderList.stream().filter(it -> it.toLowerCase().contains(searchTemplate.toString())).collect(Collectors.toList());
         listViewId.setItems(FXCollections.observableArrayList(tempHeaderList));
     }
 
     public void onMouseClickedButtonClean(MouseEvent mouseEvent) {
-        searchTemplate = "";
+        searchTemplate.delete(0, searchTemplate.length()).append("");
         textFieldSearchId.clear();
         List<String> headerList = table.getHeaderList();
         tempHeaderList = headerList;
         listViewId.setItems(FXCollections.observableArrayList(headerList));
     }
 
+    public void viewOnClickedListener(MouseEvent mouseEvent) {
+        if (templateMap.get(selectedItemListView).toString().equals("")) { /////////////////////////// добавить и в генерате
+            templateMap.put(selectedItemListView, new StringBuilder(textAreaTemplateId.getText()));
+        }
+        Generator generator = new Generator();
+        String content = generator.view(templateMap, table);
+        if (!content.equals("")) {
+            Dialogs.getInstance().showDialog(resourceBundle.getString(SHOW_DIALOG_VIEW_NAME), content, mainStage);
+        } else {
+           Dialogs.getInstance().errorDialog(resourceBundle.getString(ERROR), resourceBundle.getString(ERROR_TEXT_3));
+        }
+    }
+
     public void openFileListener(ActionEvent actionEvent) {
+        textAreaTemplateId.clear();
+        textFieldSearchId.clear();
+
         File selectedFile = getFile();
         Dialogs dialogs = Dialogs.getInstance();
         String[] extensions = ConfigReader.getExtensions().split(",");
@@ -126,7 +142,7 @@ public class MainController implements Initializable {
             listViewId.setItems(items);
             tempHeaderList = listViewId.getItems();
             for (String item : headerList) {
-                templateMap.put(item, "");
+                templateMap.put(item, new StringBuilder(""));
             }
             textFieldSearchId.setVisible(true);
             buttonCleanId.setVisible(true);
@@ -204,10 +220,14 @@ public class MainController implements Initializable {
     private final String LABEL_COLUMN_NAME1 = "label.column.name";
     private final String FIELD_SEARCH = "text.field.search";
     private final String FILE_CHOOSER_CHOOSE = "fileChooser.chooseFile";
+    private final String SHOW_DIALOG_VIEW_NAME = "showDialog.view.name";
     private final String ERROR = "error";
-    private final String ERROR_TEXT_1 = "error.text.1";
-    private final String ERROR_TEXT_2 = "error.text.2";
+    private final String ERROR_TEXT_1 = "error.message.1";
+    private final String ERROR_TEXT_2 = "error.message.2";
+    private final String ERROR_TEXT_3 = "error.message.3";
 
 
+    public void onMouseClickedGenerateListener(MouseEvent mouseEvent) {
 
+    }
 }
