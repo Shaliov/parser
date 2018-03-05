@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
@@ -73,13 +74,15 @@ public class MainController implements Initializable {
     }
 
 
-    public void listViewMousePressed(MouseEvent mouseEvent) {
+    @FXML
+    private void listViewMousePressed(MouseEvent mouseEvent) {
         if (selectedItemListView != null) {
             templateMap.put(selectedItemListView, new StringBuilder(textAreaTemplateId.getText()));
         }
     }
 
-    public void listViewMouseReleased(MouseEvent mouseEvent) {
+    @FXML
+    private void listViewMouseReleased(MouseEvent mouseEvent) {
         selectedItemListView = listViewId.getSelectionModel().getSelectedItem();
         StringBuilder template = templateMap.get(selectedItemListView);
         if (template != null) {
@@ -90,18 +93,24 @@ public class MainController implements Initializable {
         }
     }
 
-    public void onKeyReleasedSearchField(KeyEvent keyEvent) {
-        if (!keyEvent.getText().equals("")) {
-            searchTemplate = searchTemplate.append(keyEvent.getText().toLowerCase());
-        } else {
-            searchTemplate = searchTemplate.delete(0,searchTemplate.length() - 1);
+    @FXML
+    private void onKeyReleasedSearchField(KeyEvent keyEvent) {
+        if (keyEvent.getCode().equals(KeyCode.BACK_SPACE)) {
+            searchTemplate = searchTemplate.delete(searchTemplate.length() - 1, searchTemplate.length());
             tempHeaderList = table.getHeaderList();
+        } else {
+            searchTemplate = searchTemplate.append(keyEvent.getText().toLowerCase());
         }
-        tempHeaderList = tempHeaderList.stream().filter(it -> it.toLowerCase().contains(searchTemplate.toString())).collect(Collectors.toList());
+        if (searchTemplate.toString().equals("")) {
+            tempHeaderList = table.getHeaderList();
+        } else {
+            tempHeaderList = tempHeaderList.stream().filter(it -> it.toLowerCase().contains(searchTemplate.toString())).collect(Collectors.toList());
+        }
         listViewId.setItems(FXCollections.observableArrayList(tempHeaderList));
     }
 
-    public void onMouseClickedButtonClean(MouseEvent mouseEvent) {
+    @FXML
+    private void onMouseClickedButtonClean(MouseEvent mouseEvent) {
         searchTemplate.delete(0, searchTemplate.length()).append("");
         textFieldSearchId.clear();
         List<String> headerList = table.getHeaderList();
@@ -109,8 +118,9 @@ public class MainController implements Initializable {
         listViewId.setItems(FXCollections.observableArrayList(headerList));
     }
 
-    public void viewOnClickedListener(MouseEvent mouseEvent) {
-        if (templateMap.get(selectedItemListView).toString().equals("")) { /////////////////////////// добавить и в генерате
+    @FXML
+    private void viewOnClickedListener(MouseEvent mouseEvent) {
+        if (templateMap.get(selectedItemListView).toString().equals("")) {
             templateMap.put(selectedItemListView, new StringBuilder(textAreaTemplateId.getText()));
         }
         Generator generator = new Generator();
@@ -118,11 +128,31 @@ public class MainController implements Initializable {
         if (!content.equals("")) {
             Dialogs.getInstance().showDialog(resourceBundle.getString(SHOW_DIALOG_VIEW_NAME), content, mainStage);
         } else {
-           Dialogs.getInstance().errorDialog(resourceBundle.getString(ERROR), resourceBundle.getString(ERROR_TEXT_3));
+            Dialogs.getInstance().errorDialog(resourceBundle.getString(ERROR), resourceBundle.getString(ERROR_MESSAGE_3));
         }
     }
 
-    public void openFileListener(ActionEvent actionEvent) {
+    @FXML
+    private void onMouseClickedGenerateListener(MouseEvent mouseEvent) {
+        if (templateMap.get(selectedItemListView).toString().equals("")) {
+            templateMap.put(selectedItemListView, new StringBuilder(textAreaTemplateId.getText()));
+        }
+
+        Generator generator = new Generator();
+        File dir = Dialogs.getInstance().choseDirectory(resourceBundle.getString(FILE_CHOOSER_SAVE_FILE_TITLE), mainStage);
+        if (dir != null) {
+           boolean result = generator.generate(templateMap, table, dir);
+           if (result) {
+               Dialogs.getInstance().showDialog("", resourceBundle.getString(GOOD_MESSAGE));
+           }
+        } else {
+            Dialogs.getInstance().errorDialog(resourceBundle.getString(ERROR), resourceBundle.getString(ERROR_MESSAGE_4));
+        }
+    }
+
+
+    @FXML
+    private void openFileListener(ActionEvent actionEvent) {
         textAreaTemplateId.clear();
         textFieldSearchId.clear();
 
@@ -130,15 +160,15 @@ public class MainController implements Initializable {
         Dialogs dialogs = Dialogs.getInstance();
         String[] extensions = ConfigReader.getExtensions().split(",");
         if (!Arrays.stream(extensions).anyMatch((it) -> selectedFile.toString().endsWith(it))) {
-            dialogs.errorDialog(resourceBundle.getString(ERROR), resourceBundle.getString(ERROR_TEXT_1));
+            dialogs.errorDialog(resourceBundle.getString(ERROR), resourceBundle.getString(ERROR_MESSAGE_1));
             openFileListener(null);
         }
         table = ParserFabric.getInstance().doParse(selectedFile);
         if (table == null) {
-            dialogs.errorDialog(resourceBundle.getString(ERROR), resourceBundle.getString(ERROR_TEXT_2));
+            dialogs.errorDialog(resourceBundle.getString(ERROR), resourceBundle.getString(ERROR_MESSAGE_2));
         } else {
             List<String> headerList = table.getHeaderList();
-            ObservableList<String> items = FXCollections.observableArrayList (headerList);
+            ObservableList<String> items = FXCollections.observableArrayList(headerList);
             listViewId.setItems(items);
             tempHeaderList = listViewId.getItems();
             for (String item : headerList) {
@@ -162,11 +192,13 @@ public class MainController implements Initializable {
     }
 
 
-    public void changeLangEn(ActionEvent actionEvent) throws IOException {
+    @FXML
+    private void changeLangEn(ActionEvent actionEvent) throws IOException {
         initialize(null, ResourceBundle.getBundle(resourceBundle.getBaseBundleName(), new Locale("en")));
     }
 
-    public void changeLangRu(ActionEvent actionEvent) throws IOException {
+    @FXML
+    private void changeLangRu(ActionEvent actionEvent) throws IOException {
         initialize(null, ResourceBundle.getBundle(resourceBundle.getBaseBundleName(), new Locale("ru")));
     }
 
@@ -179,29 +211,46 @@ public class MainController implements Initializable {
     }
 
 
-    @FXML private Menu menuFileId;
-    @FXML private Menu menuSettingsId;
-    @FXML private Menu menuChangeLangId;
-    @FXML private Menu menuHelpId;
+    @FXML
+    private Menu menuFileId;
+    @FXML
+    private Menu menuSettingsId;
+    @FXML
+    private Menu menuChangeLangId;
+    @FXML
+    private Menu menuHelpId;
 
-    @FXML private MenuItem menuOpenCSVId;
-    @FXML private MenuItem menuChangeLangEn;
-    @FXML private MenuItem menuChangeLangRu;
-    @FXML private MenuItem menuAboutId;
+    @FXML
+    private MenuItem menuOpenCSVId;
+    @FXML
+    private MenuItem menuChangeLangEn;
+    @FXML
+    private MenuItem menuChangeLangRu;
+    @FXML
+    private MenuItem menuAboutId;
 
-    @FXML private ListView<String> listViewId;
+    @FXML
+    private ListView<String> listViewId;
 
-    @FXML private Label labelCustomizationId;
-    @FXML private Label labelColumnNameId;
+    @FXML
+    private Label labelCustomizationId;
+    @FXML
+    private Label labelColumnNameId;
 
-    @FXML private Button buttonInjectId;
-    @FXML private Button buttonViewId;
-    @FXML private Button buttonGenerateId;
-    @FXML private Button buttonCleanId;
+    @FXML
+    private Button buttonInjectId;
+    @FXML
+    private Button buttonViewId;
+    @FXML
+    private Button buttonGenerateId;
+    @FXML
+    private Button buttonCleanId;
 
 
-    @FXML private TextArea textAreaTemplateId;
-    @FXML private TextField textFieldSearchId;
+    @FXML
+    private TextArea textAreaTemplateId;
+    @FXML
+    private TextField textFieldSearchId;
 
     private final String APPLICATION_TITLE = "application.title";
     private final String BUTTON_GENERATE = "button.generate";
@@ -221,13 +270,13 @@ public class MainController implements Initializable {
     private final String FIELD_SEARCH = "text.field.search";
     private final String FILE_CHOOSER_CHOOSE = "fileChooser.chooseFile";
     private final String SHOW_DIALOG_VIEW_NAME = "showDialog.view.name";
+    private final String FILE_CHOOSER_SAVE_FILE_TITLE = "file.chooser.save.file.title";
     private final String ERROR = "error";
-    private final String ERROR_TEXT_1 = "error.message.1";
-    private final String ERROR_TEXT_2 = "error.message.2";
-    private final String ERROR_TEXT_3 = "error.message.3";
+    private final String GOOD_MESSAGE = "files.saved.successfully";
+    private final String ERROR_MESSAGE_1 = "error.message.1";
+    private final String ERROR_MESSAGE_2 = "error.message.2";
+    private final String ERROR_MESSAGE_3 = "error.message.3";
+    private final String ERROR_MESSAGE_4 = "error.message.5";
+    private final String ERROR_MESSAGE_5 = "error.message.4";
 
-
-    public void onMouseClickedGenerateListener(MouseEvent mouseEvent) {
-
-    }
 }

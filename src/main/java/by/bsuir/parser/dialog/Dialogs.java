@@ -6,10 +6,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.StackPane;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.util.Optional;
+import java.io.File;
 
 /**
  * @author Shaliou_AG
@@ -20,16 +22,34 @@ public class Dialogs {
     private Dialogs() {
     }
 
-    public void errorDialog(String error, String textError) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(error);
+    public File choseDirectory(String title, Stage stage) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle(title);
+        File file = directoryChooser.showDialog(stage);
+        if (file != null) {
+            return file;
+        }
+        return null;
+    }
+
+    public void errorDialog(String title, String textError) {
+        showAlert(title, textError, Alert.AlertType.ERROR);
+    }
+
+    public void showDialog(String title, String test) {
+        showAlert(title, test, Alert.AlertType.INFORMATION);
+    }
+
+    private void showAlert(String title, String test, Alert.AlertType information) {
+        Alert alert = new Alert(information);
+        alert.setTitle(title);
         alert.setHeaderText("");
-        alert.setContentText(textError);
+        alert.setContentText(test);
 
         alert.showAndWait();
     }
 
-    public void showDialog (String name, String content, Stage mainStage) {
+    public void showDialog (String name, String content, Stage stage) {
         TextArea textArea = new TextArea(content);
         textArea.setEditable(false);
         textArea.setWrapText(true);
@@ -37,7 +57,7 @@ public class Dialogs {
         secondaryLayout.getChildren().add(textArea);
 
 
-        Scene secondScene = new Scene(secondaryLayout, mainStage.getWidth(), mainStage.getHeight());
+        Scene secondScene = new Scene(secondaryLayout, stage.getWidth(), stage.getHeight());
 
         Stage newWindow = new Stage();
         newWindow.setTitle(name);
@@ -45,10 +65,10 @@ public class Dialogs {
 
         newWindow.initModality(Modality.WINDOW_MODAL);
 
-        newWindow.initOwner(mainStage);
+        newWindow.initOwner(stage);
 
-        newWindow.setX(mainStage.getX());
-        newWindow.setY(mainStage.getY());
+        newWindow.setX(stage.getX());
+        newWindow.setY(stage.getY());
 
         newWindow.show();
     }

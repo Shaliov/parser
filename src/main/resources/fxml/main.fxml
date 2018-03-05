@@ -86,7 +86,6 @@
                               </Button>
                            </children>
                         </HBox>
-                        <TextArea fx:id="textAreaTemplateId1" layoutX="15.0" layoutY="35.0" prefHeight="298.0" prefWidth="451.0" wrapText="true" />
                      </children>
                   </AnchorPane>
               </items>
