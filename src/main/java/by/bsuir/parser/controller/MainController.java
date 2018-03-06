@@ -146,6 +146,8 @@ public class MainController implements Initializable {
            boolean result = generator.generate(templateMap, table, dir);
            if (result) {
                Dialogs.getInstance().showDialog("", resourceBundle.getString(GOOD_MESSAGE));
+           } else {
+               Dialogs.getInstance().errorDialog(resourceBundle.getString(ERROR), resourceBundle.getString(ERROR_MESSAGE_6));
            }
         } else {
             Dialogs.getInstance().errorDialog(resourceBundle.getString(ERROR), resourceBundle.getString(ERROR_MESSAGE_4));
@@ -283,4 +285,5 @@ public class MainController implements Initializable {
     private final String ERROR_MESSAGE_3 = "error.message.3";
     private final String ERROR_MESSAGE_4 = "error.message.4";
     private final String ERROR_MESSAGE_5 = "error.message.5";
+    private final String ERROR_MESSAGE_6 = "error.message.6";
 }

@@ -21,15 +21,7 @@ public class Generator {
     }
 
     public String view(Map<String, StringBuilder> templateMap, Table table) {
-        List<StringBuilder> content = getContent(templateMap, table);
-        StringBuilder result = new StringBuilder("");
-        if(!content.stream().allMatch((it) -> it.toString().equals(""))) {
-            for (StringBuilder entry : content) {
-                result.append(entry);
-                result.append(REGEX_ENTER);
-            }
-        }
-        return result.toString();
+        return getContentFirstRow(templateMap, table);
     }
 
     public boolean generate(Map<String, StringBuilder> templateMap, Table table, File dir) {
@@ -52,34 +44,46 @@ public class Generator {
       return false;
     }
 
+    private String getContentFirstRow(Map<String, StringBuilder> templateMap, Table table) {
+        String[] row = table.getContentList().get(0);
+        List<String> headers = table.getHeaderList();
+        Pattern columnNamePattern = Pattern.compile(REGEX_COLUMN_NAME);
+        StringBuilder result = getContentFromRow(templateMap, headers, columnNamePattern, row);
+        return result.toString();
+    }
+
     private List<StringBuilder> getContent(Map<String, StringBuilder> templateMap, Table table) {
         List<StringBuilder> resultList = new ArrayList();
         List<String[]> content = table.getContentList();
         List<String> headers = table.getHeaderList();
         Pattern columnNamePattern = Pattern.compile(REGEX_COLUMN_NAME);
-        Matcher matcher = null;
         for (String[] row : content) {
-            StringBuilder result = new StringBuilder("");
-            for (int i = 0; i < row.length; i++) {
-                StringBuilder temp = templateMap.get(headers.get(i));
-                matcher = columnNamePattern.matcher(temp);
-                 while (matcher.find()) {
-                    String columnName = matcher.group().substring(2, matcher.group().length() - 1);
-                    for (int j = 0; j < headers.size(); j++) {
-                        if (headers.get(j).equals(columnName)) {
-                            temp.replace(0, temp.length(), temp.toString().replaceAll("\\$\\{" + columnName + "\\}", row[j]));
-                            break;
-                        }
-                    }
-                }
-                result.append(temp);
-            }
+            StringBuilder result = getContentFromRow(templateMap, headers, columnNamePattern, row);
             resultList.add(result);
         }
         return resultList;
     }
 
-    private final String REGEX_ENTER = "\n";
+    private StringBuilder getContentFromRow(Map<String, StringBuilder> templateMap, List<String> headers, Pattern columnNamePattern, String[] row) {
+        StringBuilder result = new StringBuilder("");
+        Matcher matcher;
+        for (int i = 0; i < row.length; i++) {
+            StringBuilder temp = new StringBuilder(templateMap.get(headers.get(i)));
+            matcher = columnNamePattern.matcher(temp);
+            while (matcher.find()) {
+                String columnName = matcher.group().substring(2, matcher.group().length() - 1);
+                for (int j = 0; j < headers.size(); j++) {
+                    if (headers.get(j).equals(columnName)) {
+                        temp.replace(0, temp.length(), temp.toString().replaceAll("\\$\\{" + columnName + "\\}", row[j]));
+                        break;
+                    }
+                }
+            }
+            result.append(temp);
+        }
+        return result;
+    }
+
     private final String REGEX_COLUMN_NAME = "(\\$\\{\\w+\\})";
     private final String EXTENSION = ".scs";
 
