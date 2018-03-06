@@ -4,7 +4,6 @@ import by.bsuir.parser.model.Table;
 import com.opencsv.CSVReader;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
@@ -13,7 +12,7 @@ import java.util.List;
 /**
  * @author Shaliou_AG
  */
-public class ParserCSVServiceImpl implements ParserService {
+public class ReaderCSVServiceImpl implements ReaderService {
     @Override
     public Table parse(File file) {
         CSVReader csvReader = null;

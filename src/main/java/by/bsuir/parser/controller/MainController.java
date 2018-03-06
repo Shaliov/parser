@@ -39,9 +39,7 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         this.resourceBundle = resources;
         if (listViewId.getItems().size() == 0) {
-            textAreaTemplateId.setVisible(false);
-            textFieldSearchId.setVisible(false);
-            buttonCleanId.setVisible(false);
+            setVisibleElements(false);
         }
         initLocale();
     }
@@ -86,8 +84,18 @@ public class MainController implements Initializable {
             textAreaTemplateId.setText(template.toString());
         }
         if (listViewId.getItems().size() != 0) {
-            textAreaTemplateId.setVisible(true);
+            setVisibleElements(true);
         }
+    }
+
+    private void setVisibleElements(boolean b) {
+        textAreaTemplateId.setVisible(b);
+        comboBoxId.setVisible(b);
+        buttonInjectId.setVisible(b);
+        buttonViewId.setVisible(b);
+        buttonGenerateId.setVisible(b);
+        textFieldSearchId.setVisible(b);
+        buttonCleanId.setVisible(b);
     }
 
     @FXML
@@ -145,6 +153,15 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    private void onMouseClickedInject(MouseEvent mouseEvent) {
+        if (comboBoxId.getValue() != null) {
+            textAreaTemplateId.appendText("${" + comboBoxId.getValue() + "}");
+        } else {
+            Dialogs.getInstance().errorDialog(ERROR, resourceBundle.getString(ERROR_MESSAGE_5));
+        }
+    }
+
+    @FXML
     private void openFileListener(ActionEvent actionEvent) {
         textAreaTemplateId.clear();
         textFieldSearchId.clear();
@@ -161,14 +178,14 @@ public class MainController implements Initializable {
             dialogs.errorDialog(resourceBundle.getString(ERROR), resourceBundle.getString(ERROR_MESSAGE_2));
         } else {
             List<String> headerList = table.getHeaderList();
+            comboBoxId.getItems().addAll(headerList);
+
             ObservableList<String> items = FXCollections.observableArrayList(headerList);
             listViewId.setItems(items);
             tempHeaderList = listViewId.getItems();
             for (String item : headerList) {
                 templateMap.put(item, new StringBuilder(""));
             }
-            textFieldSearchId.setVisible(true);
-            buttonCleanId.setVisible(true);
         }
     }
 
@@ -237,6 +254,9 @@ public class MainController implements Initializable {
     @FXML
     private TextField textFieldSearchId;
 
+    @FXML
+    private ComboBox comboBoxId;
+
     private final String APPLICATION_TITLE = "application.title";
     private final String BUTTON_GENERATE = "button.generate";
     private final String BUTTON_INJECT = "button.inject";
@@ -261,7 +281,6 @@ public class MainController implements Initializable {
     private final String ERROR_MESSAGE_1 = "error.message.1";
     private final String ERROR_MESSAGE_2 = "error.message.2";
     private final String ERROR_MESSAGE_3 = "error.message.3";
-    private final String ERROR_MESSAGE_4 = "error.message.5";
-    private final String ERROR_MESSAGE_5 = "error.message.4";
-
+    private final String ERROR_MESSAGE_4 = "error.message.4";
+    private final String ERROR_MESSAGE_5 = "error.message.5";
 }

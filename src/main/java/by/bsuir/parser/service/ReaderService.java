@@ -7,6 +7,6 @@ import java.io.File;
 /**
  * @author Shaliou_AG
  */
-public interface ParserService {
+public interface ReaderService {
     Table parse(File file);
 }

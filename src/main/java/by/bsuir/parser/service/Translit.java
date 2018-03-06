@@ -18,6 +18,7 @@ public class Translit {
     }
 
     private void initData() {
+        translitMap.put(40, new Integer[]{95});
         translitMap.put(1072, new Integer[]{97});
         translitMap.put(1073, new Integer[]{98});
         translitMap.put(1074, new Integer[]{118});

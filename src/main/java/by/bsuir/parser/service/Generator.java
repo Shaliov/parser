@@ -8,12 +8,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Shaliou_AG
  */
 public class Generator {
-
 
     public Generator() {
 
@@ -34,9 +35,10 @@ public class Generator {
     public boolean generate(Map<String, StringBuilder> templateMap, Table table, File dir) {
         List<StringBuilder> content = getContent(templateMap, table);
         if(!content.stream().allMatch((it) -> it.toString().equals(""))) {
+            int i = 0;  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             for (StringBuilder entry : content) {
                 if (!entry.toString().equals("")) {
-                    String fileName = Translit.getInstance().translate(entry.toString().substring(0, entry.indexOf(" "))) + EXTENSTION; ///////как генерить будем?
+                    String fileName = Translit.getInstance().translate(entry.toString().substring(0, entry.indexOf(" "))) + String.valueOf(i++) + EXTENSION; ///////как генерить будем?
                     try (FileWriter fileWriter = new FileWriter(new File(dir.getPath() + File.separator + fileName))) {
                         fileWriter.write(entry.toString());
                         fileWriter.flush();
@@ -54,11 +56,22 @@ public class Generator {
         List<StringBuilder> resultList = new ArrayList();
         List<String[]> content = table.getContentList();
         List<String> headers = table.getHeaderList();
+        Pattern columnNamePattern = Pattern.compile(REGEX_COLUMN_NAME);
+        Matcher matcher = null;
         for (String[] row : content) {
             StringBuilder result = new StringBuilder("");
             for (int i = 0; i < row.length; i++) {
-                String cell = row[i];
-                String temp = templateMap.get(headers.get(i)).toString().replaceAll("test", cell);
+                StringBuilder temp = templateMap.get(headers.get(i));
+                matcher = columnNamePattern.matcher(temp);
+                 while (matcher.find()) {
+                    String columnName = matcher.group().substring(2, matcher.group().length() - 1);
+                    for (int j = 0; j < headers.size(); j++) {
+                        if (headers.get(j).equals(columnName)) {
+                            temp.replace(0, temp.length(), temp.toString().replaceAll("\\$\\{" + columnName + "\\}", row[j]));
+                            break;
+                        }
+                    }
+                }
                 result.append(temp);
             }
             resultList.add(result);
@@ -67,6 +80,7 @@ public class Generator {
     }
 
     private final String REGEX_ENTER = "\n";
-    private final String EXTENSTION = ".scs";
+    private final String REGEX_COLUMN_NAME = "(\\$\\{\\w+\\})";
+    private final String EXTENSION = ".scs";
 
 }

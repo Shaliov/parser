@@ -26,8 +26,8 @@ public class ParserFabric {
     }
 
     private Table parseCsvFile(File file) {
-        ParserService parserService = new ParserCSVServiceImpl();
-        return parserService.parse(file);
+        ReaderService readerService = new ReaderCSVServiceImpl();
+        return readerService.parse(file);
     }
 
     private Table parseXlsxFile(File file) {
