@@ -36,7 +36,7 @@ public class Generator {
         if(!content.stream().allMatch((it) -> it.toString().equals(""))) {
             for (StringBuilder entry : content) {
                 if (!entry.toString().equals("")) {
-                    String fileName = entry.toString().substring(0, entry.indexOf(" ")) + ".scs"; ///////как генерить будем?
+                    String fileName = Translit.getInstance().translate(entry.toString().substring(0, entry.indexOf(" "))) + EXTENSTION; ///////как генерить будем?
                     try (FileWriter fileWriter = new FileWriter(new File(dir.getPath() + File.separator + fileName))) {
                         fileWriter.write(entry.toString());
                         fileWriter.flush();
@@ -67,5 +67,6 @@ public class Generator {
     }
 
     private final String REGEX_ENTER = "\n";
+    private final String EXTENSTION = ".scs";
 
 }

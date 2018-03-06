@@ -46,7 +46,6 @@ public class MainController implements Initializable {
         initLocale();
     }
 
-
     private void initLocale() {
         menuFileId.setText(resourceBundle.getString(MENU_FILE));
         menuSettingsId.setText(resourceBundle.getString(MENU_ITEM_SETTINGS));
@@ -59,7 +58,6 @@ public class MainController implements Initializable {
         menuAboutId.setText(resourceBundle.getString(MENU_ITEM_ABOUT));
 
         labelColumnNameId.setText(resourceBundle.getString(LABEL_COLUMN_NAME1));
-
         labelCustomizationId.setText(resourceBundle.getString(LABEL_CUSTOMIZATION));
 
         textFieldSearchId.setPromptText(resourceBundle.getString(FIELD_SEARCH));
@@ -72,7 +70,6 @@ public class MainController implements Initializable {
             mainStage.setTitle(resourceBundle.getString(APPLICATION_TITLE));
         }
     }
-
 
     @FXML
     private void listViewMousePressed(MouseEvent mouseEvent) {
@@ -120,9 +117,8 @@ public class MainController implements Initializable {
 
     @FXML
     private void viewOnClickedListener(MouseEvent mouseEvent) {
-        if (templateMap.get(selectedItemListView).toString().equals("")) {
-            templateMap.put(selectedItemListView, new StringBuilder(textAreaTemplateId.getText()));
-        }
+        templateMap.put(selectedItemListView, new StringBuilder(textAreaTemplateId.getText()));
+
         Generator generator = new Generator();
         String content = generator.view(templateMap, table);
         if (!content.equals("")) {
@@ -134,9 +130,7 @@ public class MainController implements Initializable {
 
     @FXML
     private void onMouseClickedGenerateListener(MouseEvent mouseEvent) {
-        if (templateMap.get(selectedItemListView).toString().equals("")) {
-            templateMap.put(selectedItemListView, new StringBuilder(textAreaTemplateId.getText()));
-        }
+        templateMap.put(selectedItemListView, new StringBuilder(textAreaTemplateId.getText()));
 
         Generator generator = new Generator();
         File dir = Dialogs.getInstance().choseDirectory(resourceBundle.getString(FILE_CHOOSER_SAVE_FILE_TITLE), mainStage);
@@ -149,7 +143,6 @@ public class MainController implements Initializable {
             Dialogs.getInstance().errorDialog(resourceBundle.getString(ERROR), resourceBundle.getString(ERROR_MESSAGE_4));
         }
     }
-
 
     @FXML
     private void openFileListener(ActionEvent actionEvent) {
@@ -177,8 +170,6 @@ public class MainController implements Initializable {
             textFieldSearchId.setVisible(true);
             buttonCleanId.setVisible(true);
         }
-
-
     }
 
     private File getFile() {
@@ -191,7 +182,6 @@ public class MainController implements Initializable {
         return fileChooser.showOpenDialog(mainStage);
     }
 
-
     @FXML
     private void changeLangEn(ActionEvent actionEvent) throws IOException {
         initialize(null, ResourceBundle.getBundle(resourceBundle.getBaseBundleName(), new Locale("en")));
@@ -202,14 +192,9 @@ public class MainController implements Initializable {
         initialize(null, ResourceBundle.getBundle(resourceBundle.getBaseBundleName(), new Locale("ru")));
     }
 
-    public Stage getMainStage() {
-        return mainStage;
-    }
-
     public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;
     }
-
 
     @FXML
     private Menu menuFileId;
