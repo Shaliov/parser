@@ -86,7 +86,7 @@ public class Generator {
         return result;
     }
 
-    private final String REGEX_COLUMN_NAME = "(\\$\\{(\\s*\\w+\\s*)+\\})";
+    private final String REGEX_COLUMN_NAME = "(\\$\\{((\\s)*(\\w|[а-я]|[А-Я])+(\\s)*)+\\})";
     private final String EXTENSION = ".scs";
 
 }
