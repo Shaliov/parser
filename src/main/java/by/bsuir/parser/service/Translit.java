@@ -1,7 +1,5 @@
 package by.bsuir.parser.service;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,6 +49,9 @@ public class Translit {
         translitMap.put(1101, new Integer[]{101});
         translitMap.put(1102, new Integer[]{121, 117});
         translitMap.put(1103, new Integer[]{121, 97});
+        for (int i = 97; i < 123; i ++) {
+            translitMap.put(i, new Integer[]{i});
+        }
     }
 
     public String translate(String word) {
