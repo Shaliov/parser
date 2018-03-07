@@ -5,9 +5,9 @@ import by.bsuir.parser.model.Table;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,10 +27,11 @@ public class Generator {
     public boolean generate(Map<String, StringBuilder> templateMap, Table table, File dir) {
         List<StringBuilder> content = getContent(templateMap, table);
         if(!content.stream().allMatch((it) -> it.toString().equals(""))) {
-            int i = 0;  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            int i = 0;
             for (StringBuilder entry : content) {
                 if (!entry.toString().equals("")) {
-                    String fileName = Translit.getInstance().translate(entry.toString().substring(0, entry.indexOf(" "))) + String.valueOf(i++) + EXTENSION; ///////как генерить будем?
+                    String word = table.getContentList().get(i)[0] + "_";
+                    String fileName = Translit.getInstance().translate(word) + UUID.randomUUID() + EXTENSION;
                     try (FileWriter fileWriter = new FileWriter(new File(dir.getPath() + File.separator + fileName))) {
                         fileWriter.write(entry.toString());
                         fileWriter.flush();
@@ -66,6 +67,7 @@ public class Generator {
 
     private StringBuilder getContentFromRow(Map<String, StringBuilder> templateMap, List<String> headers, Pattern columnNamePattern, String[] row) {
         StringBuilder result = new StringBuilder("");
+        StringBuilder tempResult = new StringBuilder("");
         Matcher matcher;
         for (int i = 0; i < row.length; i++) {
             StringBuilder temp = new StringBuilder(templateMap.get(headers.get(i)));
@@ -74,7 +76,7 @@ public class Generator {
                 String columnName = matcher.group().substring(2, matcher.group().length() - 1);
                 for (int j = 0; j < headers.size(); j++) {
                     if (headers.get(j).equals(columnName)) {
-                        temp.replace(0, temp.length(), temp.toString().replaceAll("\\$\\{" + columnName + "\\}", row[j]));
+                        temp = new StringBuilder(temp.toString().replaceAll("\\$\\{" + columnName + "\\}", row[j]));
                         break;
                     }
                 }

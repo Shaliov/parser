@@ -143,12 +143,12 @@ public class MainController implements Initializable {
         Generator generator = new Generator();
         File dir = Dialogs.getInstance().choseDirectory(resourceBundle.getString(FILE_CHOOSER_SAVE_FILE_TITLE), mainStage);
         if (dir != null) {
-           boolean result = generator.generate(templateMap, table, dir);
-           if (result) {
-               Dialogs.getInstance().showDialog("", resourceBundle.getString(GOOD_MESSAGE));
-           } else {
-               Dialogs.getInstance().errorDialog(resourceBundle.getString(ERROR), resourceBundle.getString(ERROR_MESSAGE_6));
-           }
+            boolean result = generator.generate(templateMap, table, dir);
+            if (result) {
+                Dialogs.getInstance().showDialog("", resourceBundle.getString(GOOD_MESSAGE));
+            } else {
+                Dialogs.getInstance().errorDialog(resourceBundle.getString(ERROR), resourceBundle.getString(ERROR_MESSAGE_6));
+            }
         } else {
             Dialogs.getInstance().errorDialog(resourceBundle.getString(ERROR), resourceBundle.getString(ERROR_MESSAGE_4));
         }

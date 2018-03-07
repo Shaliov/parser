@@ -2,12 +2,10 @@ package by.bsuir.parser.dialog;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -18,6 +16,7 @@ import java.io.File;
  */
 public class Dialogs {
     private static Dialogs instance = null;
+    private ProgressIndicator progressIndicator;
 
     private Dialogs() {
     }
