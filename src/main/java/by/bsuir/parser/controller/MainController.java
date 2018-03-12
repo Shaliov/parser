@@ -232,7 +232,7 @@ public class MainController implements Initializable {
     @FXML
     private Menu menuChangeLangId;
     @FXML
-    private Menu menuHelpId;
+    private Menu menuAboutId;
 
     @FXML
     private MenuItem menuOpenCSVId;
@@ -241,7 +241,7 @@ public class MainController implements Initializable {
     @FXML
     private MenuItem menuChangeLangRu;
     @FXML
-    private MenuItem menuAboutId;
+    private MenuItem menuHelpId;
 
     @FXML
     private ListView<String> listViewId;

@@ -92,9 +92,9 @@
             </Menu>
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="%menu.help" fx:id="menuHelpId">
+        <Menu mnemonicParsing="false" text="%menuItem.about" fx:id="menuAboutId">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#onActionAboutProgram" text="%menuItem.about" fx:id="menuAboutId" />
+            <MenuItem mnemonicParsing="false" onAction="#onActionAboutProgram" text="%menu.help" fx:id="menuHelpId" />
           </items>
         </Menu>
       </menus>
