@@ -30,8 +30,8 @@ public class Generator {
             int i = 0;
             for (StringBuilder entry : content) {
                 if (!entry.toString().equals("")) {
-                    String word = table.getContentList().get(i)[0] + "_";
-                    String fileName = Translit.getInstance().translate(word) + UUID.randomUUID() + EXTENSION;
+                    String word = table.getContentList().get(i)[0];
+                    String fileName = Translit.getInstance().translate(word) + "_" + UUID.randomUUID() + EXTENSION;
                     try (FileWriter fileWriter = new FileWriter(new File(dir.getPath() + File.separator + fileName))) {
                         fileWriter.write(entry.toString());
                         fileWriter.flush();
