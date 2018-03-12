@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="400.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="by.bsuir.parser.controller.MainController">
+<BorderPane prefHeight="400.0" prefWidth="620.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="by.bsuir.parser.controller.MainController">
   <center>
     <AnchorPane BorderPane.alignment="CENTER">
       <children>
@@ -77,25 +77,24 @@
   <top>
     <MenuBar BorderPane.alignment="CENTER">
       <menus>
-        <Menu fx:id="menuFileId" mnemonicParsing="false" text="%menu.file">
+        <Menu mnemonicParsing="false" text="%menu.file" fx:id="menuFileId">
           <items>
-            <MenuItem fx:id="menuOpenCSVId" mnemonicParsing="false" onAction="#openFileListener" text="%menuItem.openFile" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <Menu fx:id="menuSettingsId" mnemonicParsing="false" text="%menu.menuItem.settings">
+            <MenuItem mnemonicParsing="false" onAction="#openFileListener" text="%menuItem.openFile" fx:id="menuOpenCSVId" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="menu.menuItem.settings" fx:id="menuSettingsId">
+          <items>
+            <Menu mnemonicParsing="false" text="%menu.menuItem.changeLang" fx:id="menuChangeLangId">
               <items>
-                <Menu fx:id="menuChangeLangId" mnemonicParsing="false" text="%menu.menuItem.changeLang">
-                  <items>
-                    <MenuItem fx:id="menuChangeLangEn" mnemonicParsing="false" onAction="#changeLangEn" text="%menuItem.settings.changeLang.en" />
-                    <MenuItem fx:id="menuChangeLangRu" mnemonicParsing="false" onAction="#changeLangRu" text="%menuItem.settings.changeLang.ru" />
-                  </items>
-                </Menu>
+                <MenuItem mnemonicParsing="false" onAction="#changeLangEn" text="%menuItem.settings.changeLang.en" fx:id="menuChangeLangEn" />
+                <MenuItem mnemonicParsing="false" onAction="#changeLangRu" text="%menuItem.settings.changeLang.ru" fx:id="menuChangeLangRu" />
               </items>
             </Menu>
           </items>
         </Menu>
-        <Menu fx:id="menuHelpId" mnemonicParsing="false" text="%menu.help">
+        <Menu mnemonicParsing="false" text="%menu.help" fx:id="menuHelpId">
           <items>
-            <MenuItem fx:id="menuAboutId" mnemonicParsing="false" onAction="#onActionAboutProgram" text="%menuItem.about" />
+            <MenuItem mnemonicParsing="false" onAction="#onActionAboutProgram" text="%menuItem.about" fx:id="menuAboutId" />
           </items>
         </Menu>
       </menus>

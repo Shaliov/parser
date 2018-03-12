@@ -100,18 +100,22 @@ public class MainController implements Initializable {
 
     @FXML
     private void onKeyPressedSearchField(KeyEvent keyEvent) {
-        if (keyEvent.getCode().equals(KeyCode.BACK_SPACE)) {
-            searchTemplate = searchTemplate.delete(searchTemplate.length() - 1, searchTemplate.length());
-            tempHeaderList = table.getHeaderList();
-        } else {
-            searchTemplate = searchTemplate.append(keyEvent.getText().toLowerCase());
+        if(!keyEvent.getCode().equals(KeyCode.ENTER)) {
+            if (keyEvent.getCode().equals(KeyCode.BACK_SPACE)) {
+                if (searchTemplate.length() > 0) {
+                    searchTemplate = searchTemplate.delete(searchTemplate.length() - 1, searchTemplate.length());
+                }
+                tempHeaderList = table.getHeaderList();
+            } else {
+                searchTemplate = searchTemplate.append(keyEvent.getText().toLowerCase());
+            }
+            if (searchTemplate.toString().equals("")) {
+                tempHeaderList = table.getHeaderList();
+            } else {
+                tempHeaderList = tempHeaderList.stream().filter(it -> it.toLowerCase().contains(searchTemplate.toString())).collect(Collectors.toList());
+            }
+            listViewId.setItems(FXCollections.observableArrayList(tempHeaderList));
         }
-        if (searchTemplate.toString().equals("")) {
-            tempHeaderList = table.getHeaderList();
-        } else {
-            tempHeaderList = tempHeaderList.stream().filter(it -> it.toLowerCase().contains(searchTemplate.toString())).collect(Collectors.toList());
-        }
-        listViewId.setItems(FXCollections.observableArrayList(tempHeaderList));
     }
 
     @FXML

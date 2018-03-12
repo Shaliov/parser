@@ -67,7 +67,6 @@ public class Generator {
 
     private StringBuilder getContentFromRow(Map<String, StringBuilder> templateMap, List<String> headers, Pattern columnNamePattern, String[] row) {
         StringBuilder result = new StringBuilder("");
-        StringBuilder tempResult = new StringBuilder("");
         Matcher matcher;
         for (int i = 0; i < row.length; i++) {
             StringBuilder temp = new StringBuilder(templateMap.get(headers.get(i)));
@@ -82,6 +81,7 @@ public class Generator {
                 }
             }
             result.append(temp);
+            result.append("\n");
         }
         return result;
     }
