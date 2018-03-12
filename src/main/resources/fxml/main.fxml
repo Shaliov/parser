@@ -2,13 +2,12 @@
 
 <?import java.lang.*?>
 <?import javafx.collections.*?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
 
-<BorderPane prefHeight="400.0" prefWidth="620.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="by.bsuir.parser.controller.MainController">
+<BorderPane prefHeight="400.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="by.bsuir.parser.controller.MainController">
   <center>
     <AnchorPane BorderPane.alignment="CENTER">
       <children>
@@ -25,7 +24,7 @@
                         <Insets left="5.0" />
                       </GridPane.margin>
                     </Button>
-                    <TextField fx:id="textFieldSearchId" onKeyReleased="#onKeyReleasedSearchField" prefHeight="25.0" prefWidth="105.0" promptText="%text.field.search" />
+                    <TextField fx:id="textFieldSearchId" onKeyPressed="#onKeyPressedSearchField" prefHeight="25.0" prefWidth="105.0" promptText="%text.field.search" />
                   </children>
                   <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -78,25 +77,25 @@
   <top>
     <MenuBar BorderPane.alignment="CENTER">
       <menus>
-        <Menu mnemonicParsing="false" text="%menu.file" fx:id="menuFileId">
+        <Menu fx:id="menuFileId" mnemonicParsing="false" text="%menu.file">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#openFileListener" text="%menuItem.openFile" fx:id="menuOpenCSVId" />
+            <MenuItem fx:id="menuOpenCSVId" mnemonicParsing="false" onAction="#openFileListener" text="%menuItem.openFile" />
             <SeparatorMenuItem mnemonicParsing="false" />
-            <Menu mnemonicParsing="false" text="%menu.menuItem.settings" fx:id="menuSettingsId">
+            <Menu fx:id="menuSettingsId" mnemonicParsing="false" text="%menu.menuItem.settings">
               <items>
-                <Menu mnemonicParsing="false" text="%menu.menuItem.changeLang" fx:id="menuChangeLangId">
+                <Menu fx:id="menuChangeLangId" mnemonicParsing="false" text="%menu.menuItem.changeLang">
                   <items>
-                    <MenuItem mnemonicParsing="false" onAction="#changeLangEn" text="%menuItem.settings.changeLang.en" fx:id="menuChangeLangEn" />
-                    <MenuItem mnemonicParsing="false" onAction="#changeLangRu" text="%menuItem.settings.changeLang.ru" fx:id="menuChangeLangRu" />
+                    <MenuItem fx:id="menuChangeLangEn" mnemonicParsing="false" onAction="#changeLangEn" text="%menuItem.settings.changeLang.en" />
+                    <MenuItem fx:id="menuChangeLangRu" mnemonicParsing="false" onAction="#changeLangRu" text="%menuItem.settings.changeLang.ru" />
                   </items>
                 </Menu>
               </items>
             </Menu>
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="%menu.help" fx:id="menuHelpId">
+        <Menu fx:id="menuHelpId" mnemonicParsing="false" text="%menu.help">
           <items>
-            <MenuItem mnemonicParsing="false" text="%menuItem.about" fx:id="menuAboutId" />
+            <MenuItem fx:id="menuAboutId" mnemonicParsing="false" onAction="#onActionAboutProgram" text="%menuItem.about" />
           </items>
         </Menu>
       </menus>

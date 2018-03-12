@@ -99,7 +99,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void onKeyReleasedSearchField(KeyEvent keyEvent) {
+    private void onKeyPressedSearchField(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.BACK_SPACE)) {
             searchTemplate = searchTemplate.delete(searchTemplate.length() - 1, searchTemplate.length());
             tempHeaderList = table.getHeaderList();
@@ -113,6 +113,12 @@ public class MainController implements Initializable {
         }
         listViewId.setItems(FXCollections.observableArrayList(tempHeaderList));
     }
+
+    @FXML
+    private void onActionAboutProgram(ActionEvent actionEvent) {
+        Dialogs.getInstance().showDialog(resourceBundle.getString(MENU_ITEM_ABOUT), resourceBundle.getString(ABOUT_PROGRAM));
+    }
+
 
     @FXML
     private void onMouseClickedButtonClean(MouseEvent mouseEvent) {
@@ -278,6 +284,7 @@ public class MainController implements Initializable {
     private final String FILE_CHOOSER_CHOOSE = "fileChooser.chooseFile";
     private final String SHOW_DIALOG_VIEW_NAME = "showDialog.view.name";
     private final String FILE_CHOOSER_SAVE_FILE_TITLE = "file.chooser.save.file.title";
+    private final String ABOUT_PROGRAM = "about.program";
     private final String ERROR = "error";
     private final String GOOD_MESSAGE = "files.saved.successfully";
     private final String ERROR_MESSAGE_1 = "error.message.1";
@@ -286,4 +293,6 @@ public class MainController implements Initializable {
     private final String ERROR_MESSAGE_4 = "error.message.4";
     private final String ERROR_MESSAGE_5 = "error.message.5";
     private final String ERROR_MESSAGE_6 = "error.message.6";
+
+
 }

@@ -55,7 +55,6 @@ public class Dialogs {
         StackPane secondaryLayout = new StackPane();
         secondaryLayout.getChildren().add(textArea);
 
-
         Scene secondScene = new Scene(secondaryLayout, stage.getWidth(), stage.getHeight());
 
         Stage newWindow = new Stage();
